@@ -3,7 +3,8 @@ const command = {
   run: async toolbox => {
     const { print } = toolbox
 
-    print.info('Welcome to your CLI')
+    print.success('Welcome to the sBotics c# compiler.\n')
+    print.info('Type \'sboticscompiler -h\' to show all options.')
   }
 }
 
