@@ -1,12 +1,12 @@
-const loader = require('./loader');
-const tokenizer = require('./tokenizer');
-const parser = require('./parser');
+const loader = require('./loader')
+const tokenizer = require('./tokenizer')
+const parser = require('./parser')
 
-function compiler(base_path, file) {
-    const program = loader(`${base_path}/${file}`);
-    const tokens = tokenizer(program);
-    const parsed = parser(program, tokens, base_path, this);
-    return parsed;
+function compiler (basePath, file) {
+  const program = loader(`${basePath}/${file}`)
+  const tokens = tokenizer(program)
+  const parsed = parser(program, tokens, basePath, this)
+  return parsed
 }
 
-module.exports = compiler;
+module.exports = compiler
