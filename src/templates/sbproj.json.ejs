@@ -1,0 +1,11 @@
+{
+  "name": "<%= props.name %>",
+  "version": "<%= props.version %>",<% if (props.description) { %>
+  "description": "<%= props.description %>",<% } %>
+  "main": "src/main.cs",
+  "outputFolder": "out",<% if (props.license) { %>
+  "license": "<%= props.license %>"<% } %><% if (props.author) { %>,
+  "author": [
+    "<%= props.author %>"
+  ]<% } %>
+}
