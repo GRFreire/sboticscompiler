@@ -2,7 +2,7 @@
   "name": "sboticscompiler",
   "version": "0.0.1",
   "description": "sboticscompiler CLI",
-  "private": true,
+  "private": false,
   "bin": {
     "sboticscompiler": "bin/sboticscompiler"
   },
