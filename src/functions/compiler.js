@@ -5,7 +5,7 @@ const parser = require('./parser')
 function compiler (basePath, file) {
   const program = loader(`${basePath}/${file}`)
   const tokens = tokenizer(program)
-  const parsed = parser(program, tokens, basePath, this)
+  const parsed = parser(program, tokens, basePath)
   return parsed
 }
 
