@@ -7,7 +7,7 @@ const command = {
       template,
       filesystem: { cwd },
       prompt: { ask },
-      print: { success, error },
+      print: { success, error }
     } = toolbox
 
     try {
@@ -18,10 +18,10 @@ const command = {
         { type: 'input', name: 'version', message: 'version (1.0.0): ' },
         { type: 'input', name: 'description', message: 'description: ' },
         { type: 'input', name: 'author', message: 'author: ' },
-        { type: 'input', name: 'license', message: 'license (MIT): ' },
+        { type: 'input', name: 'license', message: 'license (MIT): ' }
       ]
 
-      let { name, version, description, author, license } = await toolbox.prompt.ask(questions)
+      let { name, version, description, author, license } = await ask(questions)
 
       name = name || defaultName
       version = version || '1.0.0'
