@@ -40,11 +40,17 @@ function parser (input, tokens, basePath) {
   }
 
   let program = input
-  replacements.forEach(rp => {
+  replacements.forEach((rp, i, arr) => {
     program = program.split('')
-    program.splice(rp.position.start, (rp.position.end - rp.position.start + 1))
+    const charactersToDelete = rp.position.end - rp.position.start + 1
+    program.splice(rp.position.start, charactersToDelete)
     program[rp.position.start] = rp.replaceText + separator
     program = program.join('')
+    for (let j = i + 1; j <= arr.length; j++) {
+      if (!arr[j]) continue
+      arr[j].position.start += rp.replaceText.length + separator.length - charactersToDelete - 1
+      arr[j].position.end += rp.replaceText.length + separator.length - charactersToDelete - 1
+    }
   })
 
   return program
