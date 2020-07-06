@@ -1,7 +1,8 @@
 const loader = require('./loader')
 const tokenizer = require('./tokenizer')
 
-const separator = '\n\n// -------------------------\n'
+const codeIndentifier = (file) => `// ------- ${file}\n`
+const separator = (str) => `\n// -------${'-'.repeat(str.length)}\n\n`
 
 function compiler (basePath, file, context) {
   const program = loader(`${basePath}/${file}`)
@@ -50,12 +51,12 @@ function parser (input, tokens, basePath, context) {
     program = program.split('')
     const charactersToDelete = rp.position.end - rp.position.start + 1
     program.splice(rp.position.start, charactersToDelete)
-    if (rp.replaceText !== undefined) program[rp.position.start] = rp.replaceText + separator
+    if (rp.replaceText !== undefined) program[rp.position.start] = codeIndentifier(rp.value) + rp.replaceText + separator(rp.value)
     program = program.join('')
     for (let j = i + 1; j <= arr.length; j++) {
       if (!arr[j]) return
-      arr[j].position.start += rp.replaceText.length + separator.length - charactersToDelete - 1
-      arr[j].position.end += rp.replaceText.length + separator.length - charactersToDelete - 1
+      arr[j].position.start += rp.replaceText.length + separator(rp.value).length + codeIndentifier(rp.value).length - charactersToDelete - 1
+      arr[j].position.end += rp.replaceText.length + separator(rp.value).length + codeIndentifier(rp.value).length - charactersToDelete - 1
     }
   })
 
