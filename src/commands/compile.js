@@ -36,7 +36,11 @@ const command = {
       const programIndexFile = programIndexPath.pop()
       const programPath = programIndexPath.join('/')
 
-      const program = compiler(programPath, programIndexFile)
+      const defaultContext = {
+        usingStatments: []
+      }
+
+      const program = compiler(programPath, programIndexFile, defaultContext)
 
       await template.generate({
         template: 'main.cs.ejs',

@@ -3,18 +3,22 @@ const tokenizer = require('./tokenizer')
 
 const separator = '\n\n// -------------------------\n'
 
-function compiler (basePath, file) {
+function compiler (basePath, file, context) {
   const program = loader(`${basePath}/${file}`)
   const tokens = tokenizer(program)
-  const parsed = parser(program, tokens, basePath)
+  const parsed = parser(program, tokens, basePath, context)
   return parsed
 }
 
-function replaceText (file, basePath) {
-  return compiler(basePath, `${file}.cs`)
+function replaceTextUsingParameter (file, basePath, context) {
+  const alreadyUsing = context.usingStatments.indexOf(file)
+  if (alreadyUsing === -1) {
+    context.usingStatments.push(file)
+    return compiler(basePath, `${file}.cs`, context)
+  } else return undefined
 }
 
-function parser (input, tokens, basePath) {
+function parser (input, tokens, basePath, context) {
   const replacements = []
   for (let i = 0; i <= tokens.length; i++) {
     const token = tokens[i]
@@ -27,7 +31,9 @@ function parser (input, tokens, basePath) {
               start: token.position,
               end: tokens[i + 2].position
             },
-            replaceText: replaceText(tokens[i + 1].value, basePath)
+            replaceText: replaceTextUsingParameter(tokens[i + 1].value, basePath, context),
+            type: 'using',
+            value: tokens[i + 1].value
           })
           i += 2
         } else {
@@ -44,10 +50,10 @@ function parser (input, tokens, basePath) {
     program = program.split('')
     const charactersToDelete = rp.position.end - rp.position.start + 1
     program.splice(rp.position.start, charactersToDelete)
-    program[rp.position.start] = rp.replaceText + separator
+    if (rp.replaceText !== undefined) program[rp.position.start] = rp.replaceText + separator
     program = program.join('')
     for (let j = i + 1; j <= arr.length; j++) {
-      if (!arr[j]) continue
+      if (!arr[j]) return
       arr[j].position.start += rp.replaceText.length + separator.length - charactersToDelete - 1
       arr[j].position.end += rp.replaceText.length + separator.length - charactersToDelete - 1
     }
