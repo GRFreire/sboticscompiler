@@ -1,15 +1,16 @@
-const childProcess = require('child_process');
+const childProcess = require('child_process')
 
-const compiler = require('../functions/compiler');
+const compiler = require('../functions/compiler')
 
-function exec(command) {
-  if (!command) return;
-  return new Promise((resolve) => {
+function exec (command) {
+  if (!command) return
+  return new Promise((resolve, reject) => {
     let cmd = ''
     if (Array.isArray(command)) cmd = command.join(' && ')
     else cmd = command
     childProcess.exec(cmd, (err, stdout) => {
-      resolve(stdout)
+      if (err) return reject(err)
+      return resolve(stdout)
     })
   })
 }
@@ -77,7 +78,7 @@ const command = {
         const hasCsProjectInitialized = await exec(commands)
 
         if (!hasCsProjectInitialized) {
-           commands = [
+          commands = [
             `cd ${outputFolder}/dotnet`,
             'dotnet new console'
           ]
@@ -104,11 +105,9 @@ const command = {
           error('Some errors were found')
           info(out)
         }
-
-      } catch (err){
+      } catch (err) {
         error('Error on checking for errors')
       }
-
     } catch (err) {
       error(err)
     }
