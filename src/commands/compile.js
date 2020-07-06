@@ -1,4 +1,18 @@
-const compiler = require('../functions/compiler')
+const childProcess = require('child_process');
+
+const compiler = require('../functions/compiler');
+
+function exec(command) {
+  if (!command) return;
+  return new Promise((resolve) => {
+    let cmd = ''
+    if (Array.isArray(command)) cmd = command.join(' && ')
+    else cmd = command
+    childProcess.exec(cmd, (err, stdout) => {
+      resolve(stdout)
+    })
+  })
+}
 
 const command = {
   name: 'compile',
@@ -7,7 +21,7 @@ const command = {
   run: async toolbox => {
     const {
       template,
-      filesystem: { cwd, read },
+      filesystem: { cwd, read, dir },
       print: { success, error, info }
     } = toolbox
 
@@ -49,6 +63,52 @@ const command = {
       })
 
       success(`Successfully compiled!`)
+
+      try {
+        let commands = []
+
+        await dir(`${outputFolder}/dotnet`)
+
+        commands = [
+          `cd ${outputFolder}/dotnet`,
+          'cat dotnet.csproj'
+        ]
+
+        const hasCsProjectInitialized = await exec(commands)
+
+        if (!hasCsProjectInitialized) {
+           commands = [
+            `cd ${outputFolder}/dotnet`,
+            'dotnet new console'
+          ]
+
+          await exec(commands)
+        }
+
+        await template.generate({
+          template: 'Program.cs.ejs',
+          target: `${outputFolder}/dotnet/Program.cs`,
+          props: { program }
+        })
+
+        commands = [
+          `cd ${outputFolder}/dotnet`,
+          'dotnet run'
+        ]
+
+        const out = await exec(commands)
+
+        if (out === 'compiled without errors\n') {
+          success('No errors were found!')
+        } else {
+          error('Some errors were found')
+          info(out)
+        }
+
+      } catch (err){
+        error('Error on checking for errors')
+      }
+
     } catch (err) {
       error(err)
     }
