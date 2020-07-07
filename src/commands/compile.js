@@ -142,7 +142,7 @@ const command = {
             }
           } else {
             error('Build failed due to errors')
-            info('Code was not compiled. Use --force to compile it even with errors.')
+            info('Code was not compiled. Use --force to compile it ignoring errors.')
 
             if (options.output === 'dotnet') {
               info(out)
