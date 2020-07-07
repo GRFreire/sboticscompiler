@@ -136,7 +136,7 @@ const command = {
 
             if (options.output === 'dotnet') {
               info(out)
-            }else {
+            } else {
               const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
               logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
             }
@@ -146,10 +146,10 @@ const command = {
 
             if (options.output === 'dotnet') {
               info(out)
-            }else {
+            } else {
               const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
               logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
-          }
+            }
           }
         } catch (err) {
           error('Error on building program')
