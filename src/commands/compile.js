@@ -26,7 +26,7 @@ async function saveCode (template, outputFolder, program) {
   })
 }
 
-function logErrors(out, program) {
+function logErrors (out, program) {
   const beginErrorLog = 'All projects are up-to-date for restore.'
   const endErrorLog = 'Build FAILED.'
 
@@ -139,7 +139,6 @@ const command = {
             info('Code was not compiled. Use --force to compile it even with errors.')
             logErrors(out, program)
           }
-
         } catch (err) {
           error('Error on building program')
           info(err)
