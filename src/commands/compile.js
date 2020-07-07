@@ -134,14 +134,22 @@ const command = {
             success('Code compiled and saved.')
             error('There are still some errors in your code, please check it out')
 
-            const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
-            logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
+            if (options.output === 'dotnet') {
+              info(out)
+            }else {
+              const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
+              logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
+            }
           } else {
             error('Build failed due to errors')
             info('Code was not compiled. Use --force to compile it even with errors.')
 
-            const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
-            logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
+            if (options.output === 'dotnet') {
+              info(out)
+            }else {
+              const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
+              logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
+          }
           }
         } catch (err) {
           error('Error on building program')
