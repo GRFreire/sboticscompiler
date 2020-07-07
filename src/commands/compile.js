@@ -139,6 +139,7 @@ const command = {
             await saveCode(template, outputFolder, program)
 
             success(`Successfully compiled!`)
+            info(`Check ${outputFolder}/main.cs to see your changes.`)
           } else if (options.force) {
             await saveCode(template, outputFolder, program)
 
