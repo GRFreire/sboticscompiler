@@ -2,21 +2,21 @@ const fs = require('fs')
 
 const tokenizer = require('./tokenizer')
 
-function positionToLine(position, text) {
-  const perLine = text.split('\n');
-  let line = 0;
-  for (i = 0; i < perLine.length; i++) {
-    line += perLine[i].length;
+function positionToLine (position, text) {
+  const perLine = text.split('\n')
+  let line = 0
+  for (let i = 0; i < perLine.length; i++) {
+    line += perLine[i].length
     if (line >= position) {
       line = i + 1
       break
     }
   }
-  return line;
+  return line
 }
 
-function getFullLine(line, text) {
-  const perLine = text.split('\n');
+function getFullLine (line, text) {
+  const perLine = text.split('\n')
   const lineText = perLine[line - 1]
   return lineText
 }
@@ -24,7 +24,7 @@ function getFullLine(line, text) {
 function handleErrors (error, program, sbProj) {
   const tokens = tokenizer(error)
 
-  let line = -1;
+  let line = -1
   let startErrorMessage = -1
   let endErrorMessage = -1
 
@@ -35,24 +35,23 @@ function handleErrors (error, program, sbProj) {
       if (tokens[i + 1].type === 'number') {
         line = tokens[i + 1].value
       }
-      continue;
+      continue
     }
 
     if (token.type === 'set' && token.value === ':') {
       startErrorMessage = token.position + 2
-      continue;
+      continue
     }
 
     if (token.type === 'array' && token.value === '[') {
       endErrorMessage = token.position - 1
-      continue;
+      continue
     }
   }
 
   const errorMessage = error.split('')
     .splice(startErrorMessage, (endErrorMessage - startErrorMessage))
     .join('')
-
 
   const programTokens = tokenizer(program)
 
@@ -74,7 +73,7 @@ function handleErrors (error, program, sbProj) {
     return { ...programToken, value: using }
   }).filter(using => positionToLine(using.position, program) <= line)
 
-  const lastImportStatment = imports[imports.length -1]
+  const lastImportStatment = imports[imports.length - 1]
   const lastImport = lastImportStatment.value
 
   const mainFile = sbProj.main.split('/').filter(file => file.indexOf('.cs') !== -1).join('')
