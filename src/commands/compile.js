@@ -11,7 +11,7 @@ function exec (command) {
     if (Array.isArray(command)) cmd = command.join(' && ')
     else cmd = command
     childProcess.exec(cmd, (err, stdout) => {
-      if (err) return resolve(false)
+      if (err) return resolve(stdout)
       return resolve(stdout)
     })
   })
@@ -97,17 +97,12 @@ const command = {
 
           commands = [
             `cd ${outputFolder}/dotnet`,
-            'dotnet run'
+            'dotnet build'
           ]
 
           const out = await exec(commands)
 
-          if (out === 'compiled without errors\n') {
-            success('No errors were found!')
-          } else {
-            error('Some errors were found')
-            info(out)
-          }
+          info(out)
         } catch (err) {
           error('Error on checking for errors')
           info(err)
