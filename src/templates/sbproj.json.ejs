@@ -4,6 +4,7 @@
   "description": "<%= props.description %>",<% } %>
   "main": "src/main.cs",
   "outputFolder": "out",<% if (props.license) { %>
+  "checkForErros": <%= props.hasDotnet %>,
   "license": "<%= props.license %>"<% } %><% if (props.author) { %>,
   "author": [
     "<%= props.author %>"

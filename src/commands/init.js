@@ -32,10 +32,19 @@ const command = {
         return undefined
       }
 
+      let hasDotnet = undefined
+
+      try {
+        await toolbox.system.run('dotnet --version')
+        hasDotnet = true
+      } catch (err) {
+        hasDotnet = false
+      }
+
       await template.generate({
         template: 'sbproj.json.ejs',
         target: 'sbproj.json',
-        props: { name, version, description, author, license }
+        props: { name, version, description, author, license, hasDotnet }
       })
 
       success(`sBotics c# project ${name} created`)

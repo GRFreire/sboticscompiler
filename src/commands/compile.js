@@ -2,14 +2,16 @@ const childProcess = require('child_process')
 
 const compiler = require('../functions/compiler')
 
+const package = require('../../package.json')
+
 function exec (command) {
   if (!command) return
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let cmd = ''
     if (Array.isArray(command)) cmd = command.join(' && ')
     else cmd = command
     childProcess.exec(cmd, (err, stdout) => {
-      if (err) return reject(err)
+      if (err) return resolve(false)
       return resolve(stdout)
     })
   })
@@ -35,7 +37,7 @@ const command = {
         return undefined
       }
 
-      const { main, outputFolder } = sbProj
+      const { main, outputFolder, checkForErros } = sbProj
 
       if (!main) {
         error('There is no main file specified on your sbproj.json')
@@ -65,49 +67,56 @@ const command = {
 
       success(`Successfully compiled!`)
 
-      try {
-        let commands = []
+      if (checkForErros) {
+        try {
+          let commands = []
 
-        await dir(`${outputFolder}/dotnet`)
+          await dir(`${outputFolder}/dotnet`)
 
-        commands = [
-          `cd ${outputFolder}/dotnet`,
-          'cat dotnet.csproj'
-        ]
-
-        const hasCsProjectInitialized = await exec(commands)
-
-        if (!hasCsProjectInitialized) {
           commands = [
             `cd ${outputFolder}/dotnet`,
-            'dotnet new console'
+            'cat dotnet.csproj'
           ]
 
-          await exec(commands)
+          const hasCsProjectInitialized = await exec(commands)
+
+          if (!hasCsProjectInitialized) {
+            commands = [
+              `cd ${outputFolder}/dotnet`,
+              'dotnet new console'
+            ]
+
+            await exec(commands)
+          }
+
+          await template.generate({
+            template: 'Program.cs.ejs',
+            target: `${outputFolder}/dotnet/Program.cs`,
+            props: { program }
+          })
+
+          commands = [
+            `cd ${outputFolder}/dotnet`,
+            'dotnet run'
+          ]
+
+          const out = await exec(commands)
+
+          if (out === 'compiled without errors\n') {
+            success('No errors were found!')
+          } else {
+            error('Some errors were found')
+            info(out)
+          }
+        } catch (err) {
+          error('Error on checking for errors')
+          info(err)
         }
-
-        await template.generate({
-          template: 'Program.cs.ejs',
-          target: `${outputFolder}/dotnet/Program.cs`,
-          props: { program }
-        })
-
-        commands = [
-          `cd ${outputFolder}/dotnet`,
-          'dotnet run'
-        ]
-
-        const out = await exec(commands)
-
-        if (out === 'compiled without errors\n') {
-          success('No errors were found!')
-        } else {
-          error('Some errors were found')
-          info(out)
-        }
-      } catch (err) {
-        error('Error on checking for errors')
+      } else {
+        info('Code compiled but no errors were check')
+        info(`See ${package.homepage} for more information`)
       }
+
     } catch (err) {
       error(err)
     }
