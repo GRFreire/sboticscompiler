@@ -26,22 +26,33 @@ async function saveCode (template, outputFolder, program) {
   })
 }
 
-function logErrors (out, program, sbProj) {
-  const beginErrorLog = 'All projects are up-to-date for restore.'
-  const endErrorLog = 'Build FAILED.'
+function logErrors (out, program, sbProj, options) {
+  try {
+    const beginErrorLog = 'All projects are up-to-date for restore.'
+    const endErrorLog = 'Build FAILED.'
 
-  const beginErrorSection = out.indexOf(beginErrorLog) + beginErrorLog.length + 1
-  const endErrorSection = out.indexOf(endErrorLog)
+    const beginErrorSection = out.indexOf(beginErrorLog) + beginErrorLog.length + 1
+    const endErrorSection = out.indexOf(endErrorLog)
 
-  const errors = out.split('')
-    .splice(beginErrorSection, (endErrorSection - beginErrorSection))
-    .join('')
-    .split('\n')
-    .filter(errorMessage => errorMessage)
-    .map(errorMessage => '\n' + handleErrors(errorMessage, program, sbProj) + '\n')
-    .join('')
+    const errors = out.split('')
+      .splice(beginErrorSection, (endErrorSection - beginErrorSection))
+      .join('')
+      .split('\n')
+      .filter(errorMessage => errorMessage)
+      .map(errorMessage => '\n' + handleErrors(errorMessage, program, sbProj) + '\n')
+      .join('')
 
-  console.log(errors)
+    console.log(errors)
+  } catch (err) {
+    if (options.verbose) {
+      console.log('\n')
+      console.log(err)
+    } else {
+      console.log('\n\nFaield to check for errors.\n')
+      console.log(`Try using '--output=dotnet' to show the original error code.`)
+      console.log(`You can also use '--verbose' to see the js exception and report it`)
+    }
+  }
 }
 
 const command = {
@@ -148,7 +159,7 @@ const command = {
               info(out)
             } else {
               const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
-              logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
+              logErrors(out, cProgram, { ...sbProj, cwd: cwd() }, options)
             }
           }
         } catch (err) {
