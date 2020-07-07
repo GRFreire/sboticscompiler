@@ -17,6 +17,14 @@ function exec (command) {
   })
 }
 
+async function saveCode (template, outputFolder, program) {
+  await template.generate({
+    template: 'main.cs.ejs',
+    target: `${outputFolder}/main.cs`,
+    props: { program }
+  })
+}
+
 const command = {
   name: 'compile',
   description: 'Compile your sBotics c# code',
@@ -24,6 +32,7 @@ const command = {
   run: async toolbox => {
     const {
       template,
+      parameters: { options },
       filesystem: { cwd, read, dir },
       print: { success, error, info }
     } = toolbox
@@ -58,14 +67,6 @@ const command = {
       }
 
       const program = compiler(programPath, programIndexFile, defaultContext)
-
-      await template.generate({
-        template: 'main.cs.ejs',
-        target: `${outputFolder}/main.cs`,
-        props: { program }
-      })
-
-      success(`Successfully compiled!`)
 
       if (checkForErros) {
         try {
@@ -102,9 +103,25 @@ const command = {
 
           const out = await exec(commands)
 
+          const succeeded = out.indexOf('succeeded') !== -1
+
+          if (succeeded) {
+            await saveCode(template, outputFolder, program)
+
+            success(`Successfully compiled!`)
+          } else if (options.force) {
+            await saveCode(template, outputFolder, program)
+
+            success('Code compiled and saved.')
+            error('There are still some errors in your code, please check it out')
+          } else {
+            error('Build failed due to errors')
+            info('Code was not compiled. Use --force to compile it even with errors.')
+          }
+
           info(out)
         } catch (err) {
-          error('Error on checking for errors')
+          error('Error on building program')
           info(err)
         }
       } else {
