@@ -6,6 +6,47 @@ function tokenizer (input) {
   while (current < input.length) {
     let char = input[current]
 
+    if (char === '/' && input[current + 1] === '/') {
+      const position = current
+      let value = ''
+
+      while (char !== '\n' && char) {
+        value += char
+        char = input[++current]
+      }
+
+      tokens.push({
+        type: 'comment',
+        value,
+        position,
+        end: current
+      })
+
+      continue
+    }
+
+    if (char === '/' && input[current + 1] === '*') {
+      const position = current
+      let value = ''
+
+      while (char !== '*' || input[current + 1] !== '/') {
+        value += char
+        char = input[++current]
+      }
+
+      value += char
+      char = input[++current]
+
+      tokens.push({
+        type: 'comment',
+        value,
+        position,
+        end: current
+      })
+
+      continue
+    }
+
     if (char === '(') {
       tokens.push({
         type: 'paren',
@@ -50,10 +91,52 @@ function tokenizer (input) {
       continue
     }
 
+    if (char === '[') {
+      tokens.push({
+        type: 'array',
+        value: '[',
+        position: current
+      })
+
+      current++
+
+      continue
+    }
+
+    if (char === ']') {
+      tokens.push({
+        type: 'array',
+        value: ']',
+        position: current
+      })
+      current++
+      continue
+    }
+
     if (char === ';') {
       tokens.push({
         type: 'end',
         value: ';',
+        position: current
+      })
+      current++
+      continue
+    }
+
+    if (char === ':') {
+      tokens.push({
+        type: 'set',
+        value: ':',
+        position: current
+      })
+      current++
+      continue
+    }
+
+    if (char === '.') {
+      tokens.push({
+        type: 'propertyIndentifier',
+        value: '.',
         position: current
       })
       current++

@@ -26,7 +26,7 @@ async function saveCode (template, outputFolder, program) {
   })
 }
 
-function logErrors (out, program) {
+function logErrors (out, program, sbProj) {
   const beginErrorLog = 'All projects are up-to-date for restore.'
   const endErrorLog = 'Build FAILED.'
 
@@ -38,7 +38,7 @@ function logErrors (out, program) {
     .join('')
     .split('\n')
     .filter(errorMessage => errorMessage)
-    .map(errorMessage => '\n' + handleErrors(errorMessage, program) + '\n')
+    .map(errorMessage => '\n' + handleErrors(errorMessage, program, sbProj) + '\n')
     .join('')
 
   console.log(errors)
@@ -133,11 +133,15 @@ const command = {
 
             success('Code compiled and saved.')
             error('There are still some errors in your code, please check it out')
-            logErrors(out, program)
+
+            const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
+            logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
           } else {
             error('Build failed due to errors')
             info('Code was not compiled. Use --force to compile it even with errors.')
-            logErrors(out, program)
+
+            const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
+            logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
           }
         } catch (err) {
           error('Error on building program')
