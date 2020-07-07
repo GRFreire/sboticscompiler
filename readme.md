@@ -7,7 +7,7 @@
 
 # sboticscompiler CLI
 
-A CLI for sBotics c# porjects.
+A CLI for sBotics c# projects.
 
 ## 🚀 Project
 **sboticscompiler** is a project developed focusing on help c# devs to developer their sBotics's code, with multifile support, error checking, and more.
