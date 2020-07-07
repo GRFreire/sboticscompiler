@@ -30,6 +30,14 @@
     "prettier": "^1.12.1",
     "jest": "^24.1.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GRFreire/sboticscompiler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GRFreire/sboticscompiler/issues"
+  },
+  "homepage": "https://github.com/GRFreire/sboticscompiler#readme",
   "jest": {
     "testEnvironment": "node"
   },
