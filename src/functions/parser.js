@@ -1,8 +1,8 @@
 const loader = require('./loader')
 const tokenizer = require('./tokenizer')
 
-const codeIndentifier = (file) => `// ------- ${file}\n`
-const separator = (str) => `\n// -------${'-'.repeat(str.length)}\n\n`
+const codeIndentifier = (file) => `// SBC------- ${file}\n`
+const separator = (str) => `\n// SBC-------${'-'.repeat(str.length + 1)}\n\n`
 
 function compiler (basePath, file, context) {
   const program = loader(`${basePath}/${file}`)

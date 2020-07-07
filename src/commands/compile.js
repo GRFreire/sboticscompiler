@@ -1,6 +1,7 @@
 const childProcess = require('child_process')
 
 const compiler = require('../functions/compiler')
+const handleErrors = require('../functions/handleErrors')
 
 const lib = require('../../package.json')
 
@@ -23,6 +24,24 @@ async function saveCode (template, outputFolder, program) {
     target: `${outputFolder}/main.cs`,
     props: { program }
   })
+}
+
+function logErrors(out, program) {
+  const beginErrorLog = 'All projects are up-to-date for restore.'
+  const endErrorLog = 'Build FAILED.'
+
+  const beginErrorSection = out.indexOf(beginErrorLog) + beginErrorLog.length + 1
+  const endErrorSection = out.indexOf(endErrorLog)
+
+  const errors = out.split('')
+    .splice(beginErrorSection, (endErrorSection - beginErrorSection))
+    .join('')
+    .split('\n')
+    .filter(errorMessage => errorMessage)
+    .map(errorMessage => '\n' + handleErrors(errorMessage, program) + '\n')
+    .join('')
+
+  console.log(errors)
 }
 
 const command = {
@@ -114,12 +133,13 @@ const command = {
 
             success('Code compiled and saved.')
             error('There are still some errors in your code, please check it out')
+            logErrors(out, program)
           } else {
             error('Build failed due to errors')
             info('Code was not compiled. Use --force to compile it even with errors.')
+            logErrors(out, program)
           }
 
-          info(out)
         } catch (err) {
           error('Error on building program')
           info(err)
