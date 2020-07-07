@@ -32,7 +32,7 @@ const command = {
         return undefined
       }
 
-      let hasDotnet = undefined
+      let hasDotnet = false
 
       try {
         await toolbox.system.run('dotnet --version')

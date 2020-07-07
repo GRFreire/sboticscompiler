@@ -2,7 +2,7 @@ const childProcess = require('child_process')
 
 const compiler = require('../functions/compiler')
 
-const package = require('../../package.json')
+const lib = require('../../package.json')
 
 function exec (command) {
   if (!command) return
@@ -109,9 +109,8 @@ const command = {
         }
       } else {
         info('Code compiled but no errors were check')
-        info(`See ${package.homepage} for more information`)
+        info(`See ${lib.homepage} for more information`)
       }
-
     } catch (err) {
       error(err)
     }
