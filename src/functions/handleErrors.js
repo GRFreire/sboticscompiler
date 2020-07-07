@@ -73,7 +73,7 @@ function handleErrors (error, program, sbProj) {
     return { ...programToken, value: using }
   }).filter(using => positionToLine(using.position, program) <= line)
 
-  const lastImportStatment = imports[imports.length - 1]
+  const lastImportStatment = imports[imports.length - 1] || { value: '' }
   const lastImport = lastImportStatment.value
 
   const mainFile = sbProj.main.split('/').filter(file => file.indexOf('.cs') !== -1).join('')
