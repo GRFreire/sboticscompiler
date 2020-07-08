@@ -7,6 +7,7 @@
  <a href="#project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#heavy_check_mark-requirements">Requirements</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">How to use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#eyes-examples">Examples</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-contribute">How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
@@ -35,6 +36,9 @@ Check more [here](docs/requirements.md)
   # Compile your code
   $ sboticscompiler compile
 ```
+
+## :eyes: Examples
+Check some examples [here](docs/examples.md)
 
 ## :information_source: How to contribute
 - Fork this repository;
