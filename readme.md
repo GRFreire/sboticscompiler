@@ -29,9 +29,9 @@ A CLI for sBotics c# projects.
 ## :information_source: How to contribute
 - Fork this repository;
 - Clone this repository on your machine: `` https://github.com/GRFreire/sboticscompiler.git ``
-- Create a branch with your feature: `git checkout -b my-feature`;
-- Commit your changes: `git commit -m 'feat: My new feature'`;
-- Push to your branch: `git push origin my-feature`.
+- Create a branch with your feature: `` git checkout -b my-feature ``;
+- Commit your changes: `` git commit -m 'feat: My new feature' ``;
+- Push to your branch: `` git push origin my-feature ``.
 
 ## :memo: License
 This project is under the MIT license. See the file [LICENSE](LICENSE) for more details.
