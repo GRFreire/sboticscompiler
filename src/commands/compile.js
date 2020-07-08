@@ -88,6 +88,13 @@ const command = {
         return undefined
       }
 
+      const mainFileExists = await exec(`cat ${cwd()}/${sbProj.main}`)
+
+      if (!mainFileExists) {
+        error(`There is no ${main} file or it is empty`)
+        return undefined
+      }
+
       const programIndexPath = `${cwd()}/${sbProj.main}`.split('/')
       const programIndexFile = programIndexPath.pop()
       const programPath = programIndexPath.join('/')
