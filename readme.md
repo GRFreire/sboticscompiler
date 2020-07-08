@@ -5,6 +5,7 @@
 
 <p align="center">
  <a href="#project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#heavy_check_mark-requirements">Requirements</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">How to use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-contribute">How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
@@ -16,6 +17,10 @@ A CLI for sBotics c# projects.
 
 ## 🚀 Project
 **sboticscompiler** is a project developed focusing on help c# devs to developer their sBotics's project code, with multifile support, error checking, and more.
+
+## :heavy_check_mark: Requirements
+**sboticscompiler** has some requirements to work
+Check more [here](docs/requirements.md)
 
 ## :information_source: How to use
 ```bash

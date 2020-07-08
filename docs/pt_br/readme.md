@@ -5,6 +5,7 @@
 
 <p align="center">
  <a href="#projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#heavy_check_mark-requisitos">Requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Licença</a>
@@ -16,6 +17,10 @@ Uma CLI para projeto do sBotics em c#.
 
 ## 🚀 Projeto
 **sboticscompiler** é um projeto desenvolvido com foco em ajudar os devs c# a desenvolver o código de seu projeto no sBotics, com suporte a vários arquivos, verificação de erros e muito mais.
+
+## :heavy_check_mark: Requisitos
+**sboticscompiler** tem alguns requisitos para funcionar
+Veja mais [aqui](requirements.md)
 
 ## :information_source: Como usar
 ```bash
