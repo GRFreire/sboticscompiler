@@ -6,4 +6,9 @@
 ---
 
 **For checking for errors on compiling, você precisa ter instalado:**
-- Dotnet: https://dotnet.microsoft.com/
+- (opcional) Dotnet: https://dotnet.microsoft.com/
+
+Se você iniciar um novo sbproj (``sboticscompiler init``) sem o dotnet instalado, ao compilar seu código (``sboticscompiler compile``), o sboticscompiler não procurará por erros.
+
+
+A instalação do dotnet após o início de um sbproj exigirá que você altere a propriedade ``checkForErros`` para ``true`` no seu ``sbproj.json``.
