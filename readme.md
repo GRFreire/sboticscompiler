@@ -19,7 +19,7 @@ A CLI for sBotics c# projects.
 **sboticscompiler** is a project developed focusing on help c# devs to developer their sBotics's project code, with multifile support, error checking, and more.
 
 ## :heavy_check_mark: Requirements
-**sboticscompiler** has some requirements to work
+**sboticscompiler** has some requirements to work.
 Check more [here](docs/requirements.md)
 
 ## :information_source: How to use
