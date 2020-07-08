@@ -172,7 +172,13 @@ const command = {
         info(`See ${lib.homepage} for more information`)
       }
     } catch (err) {
-      error(err)
+      if (options.verbose) {
+        console.log('\n')
+        console.log(err)
+      } else {
+        error('\nFaield to check for errors.\n')
+        console.log(`You can also use '--verbose' to see the js exception and report it`)
+      }
     }
   }
 }
