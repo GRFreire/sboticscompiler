@@ -16,7 +16,7 @@ function replaceTextUsingParameter (file, basePath, context) {
   if (alreadyUsing === -1) {
     context.usingStatments.push(file)
     return compiler(basePath, `${file}.cs`, context)
-  } else return undefined
+  } else return ''
 }
 
 function parser (input, tokens, basePath, context) {
