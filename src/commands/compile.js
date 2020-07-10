@@ -177,8 +177,8 @@ const command = {
       } else {
         await saveCode(template, outputFolder, program)
 
-        info('Code compiled but no errors were check')
-        info(`See ${lib.homepage} for more information`)
+        success('Code compiled but no errors were check')
+        info(`See ${lib.repository.base_url}/blob/master/docs/requirements.md for more information`)
       }
     } catch (err) {
       if (options.verbose) {

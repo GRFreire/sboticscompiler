@@ -32,7 +32,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GRFreire/sboticscompiler.git"
+    "url": "git+https://github.com/GRFreire/sboticscompiler.git",
+    "base_url": "https://github.com/GRFreire/sboticscompiler"
   },
   "bugs": {
     "url": "https://github.com/GRFreire/sboticscompiler/issues"
