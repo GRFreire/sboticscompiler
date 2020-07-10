@@ -175,6 +175,8 @@ const command = {
           info(err)
         }
       } else {
+        await saveCode(template, outputFolder, program)
+
         info('Code compiled but no errors were check')
         info(`See ${lib.homepage} for more information`)
       }
