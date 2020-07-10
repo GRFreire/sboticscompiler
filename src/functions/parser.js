@@ -51,7 +51,7 @@ function parser (input, tokens, basePath, context) {
     program = program.split('')
     const charactersToDelete = rp.position.end - rp.position.start + 1
     program.splice(rp.position.start, charactersToDelete)
-    if (rp.replaceText !== undefined) program[rp.position.start] = codeIndentifier(rp.value) + rp.replaceText + separator(rp.value)
+    if (rp.replaceText !== undefined && rp.replaceText !== '') program[rp.position.start] = codeIndentifier(rp.value) + rp.replaceText + separator(rp.value)
     program = program.join('')
     for (let j = i + 1; j <= arr.length; j++) {
       if (!arr[j]) return
