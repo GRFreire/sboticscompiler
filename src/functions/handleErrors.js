@@ -71,10 +71,25 @@ function handleErrors (error, program, sbProj) {
     using = using.trim()
 
     return { ...programToken, value: using }
-  }).filter(using => positionToLine(using.position, program) <= line)
+  }).map((using, i, arr) => {
+    if (using.value !== '') {
+      let innerImports = 0;
+      for (let j = i + 1; j < arr.length; j++) {
+        const usingComment = arr[j];
+        if (usingComment.value === '') {
+          if (innerImports > 0) innerImports--
+          else return { ...using, end: usingComment.position }
+        } else {
+          innerImports++;
+        }
+      }
+    }
+    return using;
+  })
+  .filter(using => positionToLine(using.position, program) <= line && positionToLine(using.end, program) >= line && using.value !== '')
+  console.log(imports)
 
-  const lastImportStatment = imports[imports.length - 1] || { value: '' }
-  const lastImport = lastImportStatment.value
+  const lastImport = imports.length > 0 ? imports[0].value : 'main'
 
   const mainFile = sbProj.main.split('/').filter(file => file.indexOf('.cs') !== -1).join('')
   const projectFolder = sbProj.main.split('/').filter(file => file !== mainFile).join('')
