@@ -73,20 +73,20 @@ function handleErrors (error, program, sbProj) {
     return { ...programToken, value: using }
   }).map((using, i, arr) => {
     if (using.value !== '') {
-      let innerImports = 0;
+      let innerImports = 0
       for (let j = i + 1; j < arr.length; j++) {
-        const usingComment = arr[j];
+        const usingComment = arr[j]
         if (usingComment.value === '') {
           if (innerImports > 0) innerImports--
           else return { ...using, end: usingComment.position }
         } else {
-          innerImports++;
+          innerImports++
         }
       }
     }
-    return using;
+    return using
   })
-  .filter(using => positionToLine(using.position, program) <= line && positionToLine(using.end, program) >= line && using.value !== '')
+    .filter(using => positionToLine(using.position, program) <= line && positionToLine(using.end, program) >= line && using.value !== '')
 
   const lastImport = imports.length > 0 ? imports[0].value : 'main'
 
