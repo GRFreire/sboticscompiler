@@ -87,7 +87,6 @@ function handleErrors (error, program, sbProj) {
     return using;
   })
   .filter(using => positionToLine(using.position, program) <= line && positionToLine(using.end, program) >= line && using.value !== '')
-  console.log(imports)
 
   const lastImport = imports.length > 0 ? imports[0].value : 'main'
 
