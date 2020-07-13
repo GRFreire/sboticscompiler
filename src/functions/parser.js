@@ -26,20 +26,33 @@ function parser (input, tokens, basePath, context) {
     if (token === undefined) continue
     if (token.type === 'name' && token.value === 'using') {
       if (tokens[i + 1].type === 'name') {
-        if (tokens[i + 2].type === 'end') {
-          replacements.push({
-            position: {
-              start: token.position,
-              end: tokens[i + 2].position
-            },
-            replaceText: replaceTextUsingParameter(tokens[i + 1].value, basePath, context),
-            type: 'using',
-            value: tokens[i + 1].value
-          })
-          i += 2
-        } else {
-          throw new Error('using statment should end on a ";"')
+        let name = ''
+
+        let j = i + 1
+        while (true) {
+          if (tokens[j].type === 'name') {
+            name += tokens[j].value
+          } else if (tokens[j].type === 'propertyIndentifier') {
+            name += '/'
+            if (tokens[j + 1].type !== 'name') throw new Error('using statment file should not end on a "."')
+          } else if (tokens[j].type === 'end') {
+            break
+          } else {
+            throw new Error('using statment should end on a ";"')
+          }
+          j++
         }
+
+        replacements.push({
+          position: {
+            start: i > 0 ? tokens[j - 2].position : 0,
+            end: tokens[j].position
+          },
+          replaceText: replaceTextUsingParameter(name, basePath, context),
+          type: 'using',
+          value: name
+        })
+        i = j
       } else {
         throw new Error('using statment should have a name next to it')
       }
