@@ -27,11 +27,13 @@ function parser (input, tokens, basePath, context) {
     if (token.type === 'name' && token.value === 'using') {
       if (tokens[i + 1].type === 'name') {
         let name = ''
+        let importsCount = 0
 
         let j = i + 1
         while (true) {
           if (tokens[j].type === 'name') {
             name += tokens[j].value
+            importsCount++
           } else if (tokens[j].type === 'propertyIndentifier') {
             name += '/'
             if (tokens[j + 1].type !== 'name') throw new Error('using statment file should not end on a "."')
@@ -45,7 +47,7 @@ function parser (input, tokens, basePath, context) {
 
         replacements.push({
           position: {
-            start: i > 0 ? tokens[j - 2].position : 0,
+            start: i > 0 ? tokens[j - importsCount - 2].position : 0,
             end: tokens[j].position
           },
           replaceText: replaceTextUsingParameter(name, basePath, context),
