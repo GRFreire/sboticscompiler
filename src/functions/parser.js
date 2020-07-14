@@ -1,7 +1,7 @@
 const loader = require('./loader')
 const tokenizer = require('./tokenizer')
 
-const codeIndentifier = (file) => `// SBC------- ${file}\n`
+const codeIdentifier = (file) => `// SBC------- ${file}\n`
 const separator = (str) => `\n// SBC-------${'-'.repeat(str.length + 1)}\n\n`
 
 function compiler (basePath, file, context) {
@@ -12,9 +12,9 @@ function compiler (basePath, file, context) {
 }
 
 function replaceTextUsingParameter (file, basePath, context) {
-  const alreadyUsing = context.usingStatments.indexOf(file)
+  const alreadyUsing = context.usingStatements.indexOf(file)
   if (alreadyUsing === -1) {
-    context.usingStatments.push(file)
+    context.usingStatements.push(file)
     return compiler(basePath, `${file}.cs`, context)
   } else return ''
 }
@@ -34,13 +34,13 @@ function parser (input, tokens, basePath, context) {
           if (tokens[j].type === 'name') {
             name += tokens[j].value
             importsCount++
-          } else if (tokens[j].type === 'propertyIndentifier') {
+          } else if (tokens[j].type === 'propertyIdentifier') {
             name += '/'
-            if (tokens[j + 1].type !== 'name') throw new Error('using statment file should not end on a "."')
+            if (tokens[j + 1].type !== 'name') throw new Error('using statement file should not end on a "."')
           } else if (tokens[j].type === 'end') {
             break
           } else {
-            throw new Error('using statment should end on a ";"')
+            throw new Error('using statement should end on a ";"')
           }
           j++
         }
@@ -56,7 +56,7 @@ function parser (input, tokens, basePath, context) {
         })
         i = j
       } else {
-        throw new Error('using statment should have a name next to it')
+        throw new Error('using statement should have a name next to it')
       }
     }
   }
@@ -66,12 +66,12 @@ function parser (input, tokens, basePath, context) {
     program = program.split('')
     const charactersToDelete = rp.position.end - rp.position.start + 1
     program.splice(rp.position.start, charactersToDelete)
-    if (rp.replaceText !== undefined && rp.replaceText !== '') program[rp.position.start] = codeIndentifier(rp.value) + rp.replaceText + separator(rp.value)
+    if (rp.replaceText !== undefined && rp.replaceText !== '') program[rp.position.start] = codeIdentifier(rp.value) + rp.replaceText + separator(rp.value)
     program = program.join('')
     for (let j = i + 1; j <= arr.length; j++) {
       if (!arr[j]) return
-      arr[j].position.start += rp.replaceText.length + separator(rp.value).length + codeIndentifier(rp.value).length - charactersToDelete - 1
-      arr[j].position.end += rp.replaceText.length + separator(rp.value).length + codeIndentifier(rp.value).length - charactersToDelete - 1
+      arr[j].position.start += rp.replaceText.length + separator(rp.value).length + codeIdentifier(rp.value).length - charactersToDelete - 1
+      arr[j].position.end += rp.replaceText.length + separator(rp.value).length + codeIdentifier(rp.value).length - charactersToDelete - 1
     }
   })
 

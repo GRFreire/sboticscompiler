@@ -48,7 +48,7 @@ function logErrors (out, program, sbProj, options) {
       console.log('\n')
       console.log(err)
     } else {
-      console.log('\n\nFaield to check for errors.\n')
+      console.log('\n\nFailed to check for errors.\n')
       console.log(`Try using '--output=dotnet' to show the original error code.`)
       console.log(`You can also use '--verbose' to see the js exception and report it`)
     }
@@ -76,7 +76,7 @@ const command = {
         return undefined
       }
 
-      const { main, outputFolder, checkForErros } = sbProj
+      const { main, outputFolder, checkForErrors: checkForErrors } = sbProj
 
       if (!main) {
         error('There is no main file specified on your sbproj.json')
@@ -100,12 +100,12 @@ const command = {
       const programPath = programIndexPath.join('/')
 
       const defaultContext = {
-        usingStatments: []
+        usingStatements: []
       }
 
       const program = compiler(programPath, programIndexFile, defaultContext)
 
-      if (checkForErros) {
+      if (checkForErrors) {
         try {
           let commands = []
 
@@ -185,7 +185,7 @@ const command = {
         console.log('\n')
         console.log(err)
       } else {
-        error('\nFaield to check for errors.\n')
+        error('\nFailed to check for errors.\n')
         console.log(`You can also use '--verbose' to see the js exception and report it`)
       }
     }

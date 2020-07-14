@@ -135,7 +135,7 @@ function tokenizer (input) {
 
     if (char === '.') {
       tokens.push({
-        type: 'propertyIndentifier',
+        type: 'propertyIdentifier',
         value: '.',
         position: current
       })
