@@ -76,7 +76,7 @@ const command = {
         return undefined
       }
 
-      const { main, outputFolder, checkForErrors: checkForErrors } = sbProj
+      const { main, outputFolder, checkForErrors } = sbProj
 
       if (!main) {
         error('There is no main file specified on your sbproj.json')
