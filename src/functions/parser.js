@@ -44,10 +44,10 @@ function parser (input, tokens, basePath, context) {
           }
           j++
         }
-
+console.log(importsCount, name)
         replacements.push({
           position: {
-            start: i > 0 ? tokens[j - importsCount - (importsCount > 2 ? 3 : 2)].position : 0,
+            start: i > 0 ? tokens[j - importsCount - importsCount].position : 0,
             end: tokens[j].position
           },
           replaceText: replaceTextUsingParameter(name, basePath, context),
