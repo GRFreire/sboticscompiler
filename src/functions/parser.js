@@ -44,7 +44,7 @@ function parser (input, tokens, basePath, context) {
           }
           j++
         }
-console.log(importsCount, name)
+
         replacements.push({
           position: {
             start: i > 0 ? tokens[j - importsCount - importsCount].position : 0,
