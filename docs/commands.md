@@ -5,4 +5,4 @@
     - Options:
       - --force: Compile and save your code ignoring errors.
       - --output [ dotnet ] : Set which log error will appear. Default is sboticscompiler own logs.
-      - --verbose: if sboticscompiler throw an unnexpected error, you can see it passing this option.
+      - --verbose: if sboticscompiler throw an unexpected error, you can see it passing this option.

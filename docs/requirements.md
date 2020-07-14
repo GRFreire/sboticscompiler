@@ -11,4 +11,4 @@
 If you start a new sbproj (``sboticscompiler init``) without dotnet installed, when compiling your code (``sboticscompiler compile``) sboticscompiler will not check for errors.
 
 
-Installing dotnet after you started a sbproj, will require you to change the ``checkForErros`` property to ``true`` on your ``sbproj.json``.
+Installing dotnet after you started a sbproj, will require you to change the ``checkForErrors`` property to ``true`` on your ``sbproj.json``.
