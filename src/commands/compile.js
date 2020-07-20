@@ -26,7 +26,10 @@ async function saveCode (template, outputFolder, program, sbProj) {
       program,
       name: sbProj.name,
       version: sbProj.version,
-      credits: sbProj.author ? sbProj.author.reduce((previousValue, currentValue) => { return previousValue+= `, ${currentValue}` }) : '',
+      credits: sbProj.author ? sbProj.author.reduce((previousValue, currentValue) => {
+        previousValue += `, ${currentValue}`
+        return previousValue
+      }) : '',
       license: sbProj.license
     }
   })
