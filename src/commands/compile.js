@@ -18,11 +18,17 @@ function exec (command) {
   })
 }
 
-async function saveCode (template, outputFolder, program) {
+async function saveCode (template, outputFolder, program, sbProj) {
   await template.generate({
     template: 'main.cs.ejs',
     target: `${outputFolder}/main.cs`,
-    props: { program }
+    props: {
+      program,
+      name: sbProj.name,
+      version: sbProj.version,
+      credits: sbProj.author ? sbProj.author.reduce((previousValue, currentValue) => { return previousValue+= `, ${currentValue}` }) : '',
+      license: sbProj.license
+    }
   })
 }
 
@@ -143,12 +149,12 @@ const command = {
           const succeeded = out.indexOf('succeeded') !== -1
 
           if (succeeded) {
-            await saveCode(template, outputFolder, program)
+            await saveCode(template, outputFolder, program, sbProj)
 
             success(`Successfully compiled!`)
             info(`Check ${outputFolder}/main.cs to see your changes.`)
           } else if (options.force) {
-            await saveCode(template, outputFolder, program)
+            await saveCode(template, outputFolder, program, sbProj)
 
             success('Code compiled and saved.')
             error('There are still some errors in your code, please check it out')
@@ -175,7 +181,7 @@ const command = {
           info(err)
         }
       } else {
-        await saveCode(template, outputFolder, program)
+        await saveCode(template, outputFolder, program, sbProj)
 
         success('Code compiled but no errors were check')
         info(`See ${lib.repository.base_url}/blob/master/docs/requirements.md for more information`)
