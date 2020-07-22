@@ -102,7 +102,7 @@ const command = {
         return undefined
       }
 
-      const mainFileExists = await exec(`cat ${cwd()}${slash}${sbProj.main}`)
+      const mainFileExists = await exec(`${isWindows ? 'type' : 'cat'} ${cwd()}${slash}${sbProj.main}`)
 
       if (!mainFileExists) {
         error(`There is no ${main} file or it is empty`)
@@ -127,7 +127,7 @@ const command = {
 
           commands = [
             `cd ${outputFolder}${slash}dotnet`,
-            'cat dotnet.csproj'
+            `${isWindows ? 'type' : 'cat'} dotnet.csproj`
           ]
 
           const hasCsProjectInitialized = await exec(commands)
