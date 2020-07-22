@@ -49,7 +49,7 @@ const command = {
       await template.generate({
         template: 'sbproj.json.ejs',
         target: 'sbproj.json',
-        props: { name, version, description, author, license, hasDotnet }
+        props: { name, version, description, author, license, hasDotnet, slash }
       })
 
       success(`sBotics c# project ${name} created`)
