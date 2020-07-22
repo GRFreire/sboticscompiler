@@ -1,3 +1,8 @@
+const os = require('os')
+const platform = os.platform()
+const isWindows = platform.indexOf('win') !== -1
+const slash = isWindows ? '\\' : '/'
+
 const childProcess = require('child_process')
 
 const compiler = require('../functions/compiler')
@@ -21,7 +26,7 @@ function exec (command) {
 async function saveCode (template, outputFolder, program, sbProj) {
   await template.generate({
     template: 'main.cs.ejs',
-    target: `${outputFolder}/main.cs`,
+    target: `${outputFolder}${slash}main.cs`,
     props: {
       program,
       name: sbProj.name,
@@ -97,16 +102,16 @@ const command = {
         return undefined
       }
 
-      const mainFileExists = await exec(`cat ${cwd()}/${sbProj.main}`)
+      const mainFileExists = await exec(`cat ${cwd()}${slash}${sbProj.main}`)
 
       if (!mainFileExists) {
         error(`There is no ${main} file or it is empty`)
         return undefined
       }
 
-      const programIndexPath = `${cwd()}/${sbProj.main}`.split('/')
+      const programIndexPath = `${cwd()}${slash}${sbProj.main}`.split(slash)
       const programIndexFile = programIndexPath.pop()
-      const programPath = programIndexPath.join('/')
+      const programPath = programIndexPath.join(slash)
 
       const defaultContext = {
         usingStatements: []
@@ -118,10 +123,10 @@ const command = {
         try {
           let commands = []
 
-          await dir(`${outputFolder}/dotnet`)
+          await dir(`${outputFolder}${slash}dotnet`)
 
           commands = [
-            `cd ${outputFolder}/dotnet`,
+            `cd ${outputFolder}${slash}dotnet`,
             'cat dotnet.csproj'
           ]
 
@@ -129,7 +134,7 @@ const command = {
 
           if (!hasCsProjectInitialized) {
             commands = [
-              `cd ${outputFolder}/dotnet`,
+              `cd ${outputFolder}${slash}dotnet`,
               'dotnet new console'
             ]
 
@@ -138,12 +143,12 @@ const command = {
 
           await template.generate({
             template: 'Program.cs.ejs',
-            target: `${outputFolder}/dotnet/Program.cs`,
+            target: `${outputFolder}${slash}dotnet${slash}Program.cs`,
             props: { program }
           })
 
           commands = [
-            `cd ${outputFolder}/dotnet`,
+            `cd ${outputFolder}${slash}dotnet`,
             'dotnet build'
           ]
 
@@ -155,7 +160,7 @@ const command = {
             await saveCode(template, outputFolder, program, sbProj)
 
             success(`Successfully compiled!`)
-            info(`Check ${outputFolder}/main.cs to see your changes.`)
+            info(`Check ${outputFolder}${slash}main.cs to see your changes.`)
           } else if (options.force) {
             await saveCode(template, outputFolder, program, sbProj)
 
@@ -165,7 +170,7 @@ const command = {
             if (options.output === 'dotnet') {
               info(out)
             } else {
-              const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
+              const cProgram = await read(`${outputFolder}${slash}dotnet${slash}Program.cs`)
               logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
             }
           } else {
@@ -175,7 +180,7 @@ const command = {
             if (options.output === 'dotnet') {
               info(out)
             } else {
-              const cProgram = await read(`${outputFolder}/dotnet/Program.cs`)
+              const cProgram = await read(`${outputFolder}${slash}dotnet${slash}Program.cs`)
               logErrors(out, cProgram, { ...sbProj, cwd: cwd() }, options)
             }
           }

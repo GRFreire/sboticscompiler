@@ -1,3 +1,8 @@
+const os = require('os')
+const platform = os.platform()
+const isWindows = platform.indexOf('win') !== -1
+const slash = isWindows ? '\\' : '/'
+
 const command = {
   name: 'init',
   description: 'Create a sBotics c# project',
@@ -11,7 +16,7 @@ const command = {
     } = toolbox
 
     try {
-      const defaultName = cwd().split('/').pop()
+      const defaultName = cwd().split(slash).pop()
 
       const questions = [
         { type: 'input', name: 'name', message: `name (${defaultName}): ` },

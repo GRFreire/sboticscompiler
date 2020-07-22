@@ -1,3 +1,8 @@
+const os = require('os')
+const platform = os.platform()
+const isWindows = platform.indexOf('win') !== -1
+const slash = isWindows ? '\\' : '/'
+
 const fs = require('fs')
 
 const tokenizer = require('./tokenizer')
@@ -90,20 +95,20 @@ function handleErrors (error, program, sbProj) {
 
   const lastImport = imports.length > 0 ? imports[0].value : 'main'
 
-  const mainFile = sbProj.main.split('/').filter(file => file.indexOf('.cs') !== -1).join('')
-  const projectFolder = sbProj.main.split('/').filter(file => file !== mainFile).join('')
+  const mainFile = sbProj.main.split(slash).filter(file => file.indexOf('.cs') !== -1).join('')
+  const projectFolder = sbProj.main.split(slash).filter(file => file !== mainFile).join('')
 
   let errorOnFile = ''
   if (lastImport === '') errorOnFile = `${mainFile}`
   else errorOnFile = `${lastImport}.cs`
 
-  const cProgram = fs.readFileSync(`${sbProj.outputFolder}/dotnet/Program.cs`).toString()
+  const cProgram = fs.readFileSync(`${sbProj.outputFolder}${slash}dotnet${slash}Program.cs`).toString()
   const errorLineContent = getFullLine(line, cProgram)
 
-  const rootProgram = fs.readFileSync(`${projectFolder}/${errorOnFile}`).toString()
+  const rootProgram = fs.readFileSync(`${projectFolder}${slash}${errorOnFile}`).toString()
   const trueLine = positionToLine(rootProgram.indexOf(errorLineContent), rootProgram)
 
-  return `${errorOnFile} (${trueLine}): ${errorMessage}  [${sbProj.cwd}/${projectFolder}/${errorOnFile}]`
+  return `${errorOnFile} (${trueLine}): ${errorMessage}  [${sbProj.cwd}${slash}${projectFolder}${slash}${errorOnFile}]`
 }
 
 module.exports = handleErrors
