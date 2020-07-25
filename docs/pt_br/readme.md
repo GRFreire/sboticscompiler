@@ -30,8 +30,8 @@ Veja mais [aqui](requirements.md)
   # ou
   $ yarn global add sboticscompiler
 
-  # somente no Windows, para autorizar o windows rodar a cli
-  Set-ExecutionPolicy Bypass -Scope Process # rode no powershell como administrador
+  # somente no Windows, para autorizar o windows rodar a cli (toda vez que iniciar um novo terminal)
+  Set-ExecutionPolicy Bypass -Scope Process
 
   # Crie um novo projeto
   $ sboticscompiler init

@@ -30,8 +30,8 @@ Check more [here](docs/requirements.md)
   # or
   $ yarn global add sboticscompiler
 
-  # only on Windows, to allow windows run the cli
-  Set-ExecutionPolicy Bypass -Scope Process # run in powershell as administrator
+  # only on Windows, to allow windows run the cli (every time after opening a new terminal)
+  Set-ExecutionPolicy Bypass -Scope Process
 
   # Create a new project
   $ sboticscompiler init
