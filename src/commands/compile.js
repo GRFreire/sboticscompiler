@@ -1,3 +1,5 @@
+const path = require('path')
+
 const os = require('os')
 const platform = os.platform()
 const isWindows = platform.indexOf('win') !== -1
@@ -26,7 +28,7 @@ function exec (command) {
 async function saveCode (template, outputFolder, program, sbProj) {
   await template.generate({
     template: 'main.cs.ejs',
-    target: `${outputFolder}${slash}main.cs`,
+    target: path.resolve(outputFolder, 'main.cs'),
     props: {
       program,
       name: sbProj.name,
@@ -90,7 +92,8 @@ const command = {
         return undefined
       }
 
-      const { main, outputFolder, checkForErrors } = sbProj
+      const { outputFolder, checkForErrors } = sbProj
+      const main = path.resolve(__dirname, ...sbProj.main.split('/'))
 
       if (!main) {
         error('There is no main file specified on your sbproj.json')
@@ -102,14 +105,14 @@ const command = {
         return undefined
       }
 
-      const mainFileExists = await exec(`${isWindows ? 'type' : 'cat'} ${cwd()}${slash}${sbProj.main}`)
+      const mainFileExists = await exec(`${isWindows ? 'type' : 'cat'} ${path.resolve(cwd(), sbProj.main)}`)
 
       if (!mainFileExists) {
         error(`There is no ${main} file or it is empty`)
         return undefined
       }
 
-      const programIndexPath = `${cwd()}${slash}${sbProj.main}`.split(slash)
+      const programIndexPath = path.resolve(cwd(), sbProj.main).split(slash)
       const programIndexFile = programIndexPath.pop()
       const programPath = programIndexPath.join(slash)
 
@@ -123,10 +126,10 @@ const command = {
         try {
           let commands = []
 
-          await dir(`${outputFolder}${slash}dotnet`)
+          await dir(path.resolve(outputFolder, 'dotnet'))
 
           commands = [
-            `cd ${outputFolder}${slash}dotnet`,
+            `cd ${path.resolve(outputFolder, 'dotnet')}`,
             `${isWindows ? 'type' : 'cat'} dotnet.csproj`
           ]
 
@@ -134,7 +137,7 @@ const command = {
 
           if (!hasCsProjectInitialized) {
             commands = [
-              `cd ${outputFolder}${slash}dotnet`,
+              `cd ${path.resolve(outputFolder, 'dotnet')}`,
               'dotnet new console'
             ]
 
@@ -143,12 +146,12 @@ const command = {
 
           await template.generate({
             template: 'Program.cs.ejs',
-            target: `${outputFolder}${slash}dotnet${slash}Program.cs`,
+            target: `${path.resolve(outputFolder, 'dotnet', 'Program.cs')}`,
             props: { program }
           })
 
           commands = [
-            `cd ${outputFolder}${slash}dotnet`,
+            `cd ${path.resolve(outputFolder, 'dotnet')}`,
             'dotnet build'
           ]
 
@@ -170,7 +173,7 @@ const command = {
             if (options.output === 'dotnet') {
               info(out)
             } else {
-              const cProgram = await read(`${outputFolder}${slash}dotnet${slash}Program.cs`)
+              const cProgram = await read(path.resolve(outputFolder, 'dotnet', 'Program.cs'))
               logErrors(out, cProgram, { ...sbProj, cwd: cwd() })
             }
           } else {
@@ -180,7 +183,7 @@ const command = {
             if (options.output === 'dotnet') {
               info(out)
             } else {
-              const cProgram = await read(`${outputFolder}${slash}dotnet${slash}Program.cs`)
+              const cProgram = await read(path.resolve(outputFolder, 'dotnet', 'Program.cs'))
               logErrors(out, cProgram, { ...sbProj, cwd: cwd() }, options)
             }
           }

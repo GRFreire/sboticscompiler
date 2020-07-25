@@ -1,3 +1,5 @@
+const path = require('path')
+
 const os = require('os')
 const platform = os.platform()
 const isWindows = platform.indexOf('win') !== -1
@@ -102,13 +104,13 @@ function handleErrors (error, program, sbProj) {
   if (lastImport === '') errorOnFile = `${mainFile}`
   else errorOnFile = `${lastImport}.cs`
 
-  const cProgram = fs.readFileSync(`${sbProj.outputFolder}${slash}dotnet${slash}Program.cs`).toString()
+  const cProgram = fs.readFileSync(path.resolve(sbProj.outputFolder, 'dotnet', 'Program.cs')).toString()
   const errorLineContent = getFullLine(line, cProgram)
 
-  const rootProgram = fs.readFileSync(`${projectFolder}${slash}${errorOnFile}`).toString()
+  const rootProgram = fs.readFileSync(path.resolve(projectFolder, errorOnFile)).toString()
   const trueLine = positionToLine(rootProgram.indexOf(errorLineContent), rootProgram)
 
-  return `${errorOnFile} (${trueLine}): ${errorMessage}  [${sbProj.cwd}${slash}${projectFolder}${slash}${errorOnFile}]`
+  return `${errorOnFile} (${trueLine}): ${errorMessage}  [${path.resolve(sbProj.cwd, projectFolder, errorOnFile)}]`
 }
 
 module.exports = handleErrors

@@ -1,3 +1,5 @@
+const path = require('path')
+
 const os = require('os')
 const platform = os.platform()
 const isWindows = platform.indexOf('win') !== -1
@@ -10,7 +12,7 @@ const codeIdentifier = (file) => `// SBC------- ${file}\n`
 const separator = (str) => `\n// SBC-------${'-'.repeat(str.length + 1)}\n\n`
 
 function compiler (basePath, file, context) {
-  const program = loader(`${basePath}${slash}${file}`)
+  const program = loader(`${path.resolve(basePath, file)}`)
   const tokens = tokenizer(program)
   const parsed = parser(program, tokens, basePath, context)
   return parsed
