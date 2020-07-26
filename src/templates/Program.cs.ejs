@@ -5,32 +5,44 @@ namespace dotnet
 {
     class bc
     {
+      // UTILS
       public static void wait(int delay) { return; }
       public static void printLCD(int line, string txt) { return; }
+      public static float millis() { return 0f; }
+
+      // SENSORS
       public static float distance(int sensor) { return 0f; }
+      public static float lightness(int sensor) { return 0f; }
+      public static float compass() { return 0f; }
+      public static float inclination() { return 0f; }
+      public static bool touch() { return true; }
+
       public static string returnColor(int sensor, float precision) { return ""; }
       public static float returnGreen(int sensor) { return 0f; }
       public static float returnRed(int sensor) { return 0f; }
       public static float returnBlue(int sensor) { return 0f; }
-      public static float lightness(int sensor) { return 0f; }
+
+      // MOTORS
       public static void onTF(float left, float right) { return; }
       public static void onTFRot(float force, float angle) { return; }
-      public static float millis() { return 0f; }
-      public static float compass() { return 0f; }
-      public static float inclination() { return 0f; }
-      public static bool touch() { return true; }
-      public static void Abrir() { return; }
-      public static void Fechar() { return; }
-      public static void ActivateAngleActuator() { return; }
-      public static void ChangeAngleActuatorUp() { return; }
-      public static void DesactivateAngleActuator() { return; }
-      public static void ChangeAngleActuatorDown() { return; }
-      public static void ActivateActuator() { return; }
-      public static void ChangeDirectionActuatorDown() { return; }
-      public static void DesactivateActuator() { return; }
-      public static void ChangeDirectionActuatorUp() { return; }
-      public static float angleActuator() { return 0f; }
+
+      // CLAW
       public static void actuatorSpeed(int speed) { return; }
+
+      public static void openActuator() { return; }
+      public static void closeActuator() { return; }
+
+      public static void actuatorUp(int time) { return; }
+      public static void actuatorDown(int time) { return; }
+      public static void turnActuatorUp(int time) { return; }
+      public static void turnActuatorDown(int time) { return; }
+
+      public static float angleActuator() { return 0f; }
+
+      // OUTPUT
+      public static void turnLedOff() { return; }
+      public static void turnLedOn(string color) { return; }
+      public static void turnLedOn(int r, int b, int g) { return; }
     }
 
     class Program
