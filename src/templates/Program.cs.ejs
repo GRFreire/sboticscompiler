@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace dotnet
 {
@@ -9,6 +10,11 @@ namespace dotnet
       public static void wait(int delay) { return; }
       public static void printLCD(int line, string txt) { return; }
       public static float millis() { return 0f; }
+      public static float timer() { return 0f; }
+      public static void resetTimer() { return; }
+      public static void saveLCD() { return; }
+      public static void stopSavingLCD() { return; }
+      public static void eraseLCDFile() { return; }
 
       // SENSORS
       public static float distance(int sensor) { return 0f; }
@@ -25,6 +31,7 @@ namespace dotnet
       // MOTORS
       public static void onTF(float left, float right) { return; }
       public static void onTFRot(float force, float angle) { return; }
+      public static void onTFRotations(float force, int rotations) { return; }
 
       // CLAW
       public static void actuatorSpeed(int speed) { return; }
