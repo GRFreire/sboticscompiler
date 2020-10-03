@@ -9,6 +9,8 @@ namespace dotnet
       // UTILS
       public static void wait(int delay) { return; }
       public static void printLCD(int line, string txt) { return; }
+      public static void clearLCD() { return; }
+      public static void clearLCDLine(int line) { return; }
       public static float millis() { return 0f; }
       public static float timer() { return 0f; }
       public static void resetTimer() { return; }
@@ -18,20 +20,29 @@ namespace dotnet
 
       // SENSORS
       public static float distance(int sensor) { return 0f; }
+      public static bool detectDistance(int sensor, int minDistance, int maxDistance) { return true; }
       public static float lightness(int sensor) { return 0f; }
       public static float compass() { return 0f; }
       public static float inclination() { return 0f; }
       public static bool touch(int sensor) { return true; }
 
       public static string returnColor(int sensor, float precision) { return ""; }
+      public static void colorSens(int sensibility) { return; }
       public static float returnGreen(int sensor) { return 0f; }
       public static float returnRed(int sensor) { return 0f; }
       public static float returnBlue(int sensor) { return 0f; }
 
+      public static float heat() { return 0f; }
+
       // MOTORS
       public static void onTF(float left, float right) { return; }
+      public static void onTFRight(float force) { return; }
+      public static void onTFLeft(float force) { return; }
       public static void onTFRot(float force, float angle) { return; }
       public static void onTFRotations(float force, int rotations) { return; }
+
+      public static float getonTFRight() { return 0f; }
+      public static float getonTFLeft() { return 0f; }
 
       // CLAW
       public static void actuatorSpeed(int speed) { return; }
@@ -45,11 +56,44 @@ namespace dotnet
       public static void turnActuatorDown(int time) { return; }
 
       public static float angleActuator() { return 0f; }
+      public static float angleBucket() { return 0f; }
+
+      public static bool hasVictims() { return true; }
+
+      // FAN
+      public static void turnFanOn() { return; }
+      public static void turnFanOff() { return; }
 
       // OUTPUT
       public static void turnLedOff() { return; }
       public static void turnLedOn(string color) { return; }
       public static void turnLedOn(int r, int b, int g) { return; }
+
+      // SOUND
+      public static void playNote(int speaker, string note, int time) { return; }
+      public static void playSound(int speaker, int frequency, int time, string waveType) { return; }
+      public static void playSoundHertz(int speaker, int frequency, int time, string waveType) { return; }
+      public static void changeWave(string waveType) { return; }
+      public static void stopSound(int speaker) { return; }
+      public static void stopSound() { return; }
+
+      public static float toFrequency(float hertz) { return 0f; }
+      public static float toHertz(float frequency) { return 0f; }
+
+      // DEBUG
+      public static void writeText(string text) { return; }
+      public static void writeNumber(double number) { return; }
+      public static void writeNumber(float number) { return; }
+      public static void writeNumber(int number) { return; }
+      public static void writeBoolean(bool boolean) { return; }
+
+      public static void paint() { return; }
+      public static void stopPainting() { return; }
+      public static void changePencilColor(string color) { return; }
+      public static void changePencilColor(int r, int b, int g) { return; }
+
+      public static void setPrecision(int number) { return; }
+
     }
 
     class Program
