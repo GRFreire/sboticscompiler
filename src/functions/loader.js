@@ -6,7 +6,7 @@ function load (path) {
     return buffer.toString()
   } catch (error) {
     console.log(`\nFile ${path} not exists, please check your imports.\n\n`)
-    return '\n';
+    return '\n'
   }
 }
 
