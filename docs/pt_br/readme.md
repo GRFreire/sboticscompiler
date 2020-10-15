@@ -33,15 +33,22 @@ Veja mais [aqui](requirements.md)
   # ou
   $ yarn global add sboticscompiler
 
-  # somente no Windows, para autorizar o windows rodar a cli (toda vez que iniciar um novo terminal)
-  Set-ExecutionPolicy Bypass -Scope Process
-
   # Crie um novo projeto
   $ sboticscompiler init
 
   # Compile seu código
   $ sboticscompiler compile
 ```
+
+### Somente Windows:
+
+Para autorizar o windows rodar a cli, rode isso toda vez que iniciar um novo terminal.
+
+```bash
+Set-ExecutionPolicy Bypass -Scope Process
+```
+
+> Checagem de erro não é suportado no Windows ainda, então marque `checkForErrors` como `false` no `sbproj.json`.
 
 ## :eyes: Exemplos
 

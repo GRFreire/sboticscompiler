@@ -33,15 +33,22 @@ Check more [here](docs/requirements.md)
   # or
   $ yarn global add sboticscompiler
 
-  # only on Windows, to allow windows run the cli (every time after opening a new terminal)
-  Set-ExecutionPolicy Bypass -Scope Process
-
   # Create a new project
   $ sboticscompiler init
 
   # Compile your code
   $ sboticscompiler compile
 ```
+
+### Windows only:
+
+To allow windows run the cli, run this every time after opening a new terminal.
+
+```bash
+Set-ExecutionPolicy Bypass -Scope Process
+```
+
+> Error checking is not supported on Windows yet, so check `checkForErrors` to `false` on `sbproj.json`.
 
 ## :eyes: Examples
 
