@@ -1,8 +1,13 @@
 const fs = require('fs')
 
 function load (path) {
-  const buffer = fs.readFileSync(path)
-  return buffer.toString()
+  try {
+    const buffer = fs.readFileSync(path)
+    return buffer.toString()
+  } catch (error) {
+    console.log(`\nFile ${path} not exists, please check your imports.\n\n`)
+    return '\n';
+  }
 }
 
 module.exports = load
