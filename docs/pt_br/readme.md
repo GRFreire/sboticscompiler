@@ -1,6 +1,6 @@
 <p align="center">
  <a href="../../readme.md">Inglês</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#">Português</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#">Português</a>
 </p>
 
 <p align="center">
@@ -17,13 +17,16 @@
 Uma CLI para projeto do sBotics em c#.
 
 ## 🚀 Projeto
+
 **sboticscompiler** é um projeto desenvolvido com foco em ajudar os devs c# a desenvolver o código de seu projeto no sBotics, com suporte a vários arquivos, verificação de erros e muito mais.
 
 ## :heavy_check_mark: Requisitos
+
 **sboticscompiler** tem alguns requisitos para funcionar.
 Veja mais [aqui](requirements.md)
 
 ## :information_source: Como usar
+
 ```bash
   # Instale a biblioteca de forma global
   $ npm -g install sboticscompiler
@@ -41,14 +44,17 @@ Veja mais [aqui](requirements.md)
 ```
 
 ## :eyes: Exemplos
+
 Veja alguns exemplos [here](examples.md)
 
 ## :information_source: Como contribuir
+
 - Faça um fork desse repositório;
-- Clone esse repositório em sua máquina: `` https://github.com/GRFreire/sboticscompiler.git ``
-- Cria uma branch com a sua feature: `` git checkout -b minha-feature ``;
-- Faça commit das suas alterações: `` git commit -m 'feat: Minha nova feature' ``;
-- Faça push para a sua branch: `` git push origin minha-feature ``.
+- Clone esse repositório em sua máquina: `https://github.com/GRFreire/sboticscompiler.git`
+- Cria uma branch com a sua feature: `git checkout -b minha-feature`;
+- Faça commit das suas alterações: `git commit -m 'feat: Minha nova feature'`;
+- Faça push para a sua branch: `git push origin minha-feature`.
 
 ## :memo: Licença
+
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](../../LICENSE) para mais detalhes.
