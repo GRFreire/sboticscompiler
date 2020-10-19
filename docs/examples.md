@@ -3,6 +3,7 @@
 ## Your code
 
 **src/main.cs**
+
 ```cs
 using utils;
 using debug;
@@ -16,6 +17,7 @@ while(true) loop();
 ```
 
 **src/utils.cs**
+
 ```cs
 Action<int> wait = (time) => bc.wait(time);
 Action<int, string> print = (line, text) => bc.printLCD(line, text);
@@ -27,18 +29,18 @@ Action stop = () => move(0, 0);
 ```
 
 **src/debug.cs**
-```cs
-using utils;
 
+```cs
 Action debug = () =>
 {
-    bc.printLCD(1, 5.ToString() + " | " + 4.ToString() + " | " +  3.ToString() + " | " + 2.ToString()+ " | " + 1.ToString());
-    bc.printLCD(2, "COL1" + " | " + "COL2" + " | " +  "COL3" + " | " + "COL4"+ " | " + "COL5");
-    bc.printLCD(3, "DIST1" + " | " + "DIST2" + " | " + "DIST3");
+    bc.printLCD(1, light(5) + " | " + light(4) + " | " +  light(3) + " | " + light(2)+ " | " + light(1));
+    bc.printLCD(2, color(1) + " | " + color(2) + " | " +  color(3) + " | " + color(4)+ " | " + color(5));
+    bc.printLCD(3, distance(0).ToString() + " | " + distance(2).ToString() + " | " + distance(3).ToString());
 };
 ```
 
-Typing ``sboticscompiler compile``:
+Typing `sboticscompiler compile`:
+
 ```log
 Successfully compiled!
 Check out/main.cs to see your changes.
@@ -47,7 +49,17 @@ Check out/main.cs to see your changes.
 ## Final code
 
 **out/main.cs**
+
 ```cs
+/*
+your-project-name  1.0.0
+By: Author
+License: MIT
+---
+Compiled with sboticscompiler
+https://github.com/GRFreire/sboticscompiler
+*/
+
 // SBC------- utils
 Action<int> wait = (time) => bc.wait(time);
 Action<int, string> print = (line, text) => bc.printLCD(line, text);
@@ -56,23 +68,23 @@ Func<int, string> color = (sensor) => bc.returnColor(sensor, 0.55f);
 Func<int, float> light = (sensor) => bc.lightness(sensor - 1);
 Action<float, float> move = (left, right) => bc.onTF(right, left);
 Action stop = () => move(0, 0);
+
 // SBC-------------
 
 // SBC------- debug
-
-
 Action debug = () =>
 {
-    bc.printLCD(1, 5.ToString() + " | " + 4.ToString() + " | " +  3.ToString() + " | " + 2.ToString()+ " | " + 1.ToString());
-    bc.printLCD(2, "COL1" + " | " + "COL2" + " | " +  "COL3" + " | " + "COL4"+ " | " + "COL5");
-    bc.printLCD(3, "DIST1" + " | " + "DIST2" + " | " + "DIST3");
+    bc.printLCD(1, light(5) + " | " + light(4) + " | " +  light(3) + " | " + light(2)+ " | " + light(1));
+    bc.printLCD(2, color(1) + " | " + color(2) + " | " +  color(3) + " | " + color(4)+ " | " + color(5));
+    bc.printLCD(3, distance(0).ToString() + " | " + distance(2).ToString() + " | " + distance(3).ToString());
 };
+
 // SBC-------------
 
 
 Action loop = () => {
     debug();
-    move(200, 200);
+    move(100, 100);
 };
 
 while(true) loop();
